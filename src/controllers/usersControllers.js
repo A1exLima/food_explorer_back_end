@@ -3,13 +3,12 @@ const knex = require("../dataBase/knex")
 const { hash } = require("bcryptjs")
 
 class UserControllers {
-  
   async show(request, response) {
-    const { id } = request.params
+    const {id} = request.params
 
-    const user  = await knex("users").where({id}).first()
+    const user = await knex("users").where({ id }).first()
 
-    if(!user){
+    if (!user) {
       throw new AppError("Usuário não encontrado")
     }
 
@@ -17,11 +16,7 @@ class UserControllers {
   }
 
   async create(request, response) {
-    const { isAdmin, name, email, password } = request.body
-
-    if (!name || !email || !password) {
-      throw new AppError("Preencha todos os campos")
-    }
+    const {isAdmin, name, email, password } = request.body
 
     const checkEmailExists = await knex("users").where({ email }).first()
 
@@ -31,20 +26,12 @@ class UserControllers {
 
     const hashPassword = await hash(password, 8)
 
-    if (isAdmin) {
-      await knex("users").insert({
-        isAdmin,
-        name,
-        email,
-        password: hashPassword,
-      })
-    } else {
-      await knex("users").insert({
-        name,
-        email,
-        password: hashPassword,
-      })
-    }
+    await knex("users").insert({
+      isAdmin,
+      name,
+      email,
+      password: hashPassword,
+    })
 
     return response.json({
       message: "Usuário cadastrado com sucesso",
