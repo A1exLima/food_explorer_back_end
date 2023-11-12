@@ -2,8 +2,9 @@ const { Router } = require("express")
 const usersRoutes = Router()
 
 const confirmPassword = require("../middlewares/confirmPassword")
-const userControllers = require("../controllers/usersControllers") 
+const userControllers = require("../controllers/usersControllers")
 
+usersRoutes.get("/:id", userControllers.show)
 usersRoutes.post("/", confirmPassword, userControllers.create)
 
 module.exports = usersRoutes
