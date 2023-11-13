@@ -8,5 +8,6 @@ const userControllers = require("../controllers/usersControllers")
 
 usersRoutes.get("/:id", userControllers.show)
 usersRoutes.post("/", verifyFieldsIfEmpty, confirmPassword, userControllers.create)
+usersRoutes.put("/:id", verifyFieldsIfEmpty, confirmPassword, userControllers.update)
 
 module.exports = usersRoutes

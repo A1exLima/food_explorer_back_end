@@ -1,6 +1,6 @@
 const AppError = require("../utils/appError")
 const knex = require("../dataBase/knex")
-const { hash } = require("bcryptjs")
+const { hash, compare } = require("bcryptjs")
 
 class UserControllers {
   async show(request, response) {
@@ -36,6 +36,46 @@ class UserControllers {
     return response.json({
       message: "Usuário cadastrado com sucesso",
     })
+  }
+
+  async update(request, response) {
+    
+    const {id} = request.params
+    const {isAdmin, name, email, oldPassword, password} = request.body
+
+    const user = await knex("users").where({id}).first()
+
+    if(!user){
+      throw new AppError("Usuário não encontrado")
+    }
+
+    const emailIsInUse = await knex("users").where({email}).first()
+
+    if(emailIsInUse && emailIsInUse.id !== user.id){
+      throw new AppError("E-mail encontra-se em uso")
+    }
+
+    const checkOldPassword  = await compare(oldPassword, user.password)
+
+    if(!checkOldPassword){
+      throw new AppError("Senha antiga não confere")
+    }
+
+    const newPassword = await hash(password, 8)
+
+    await knex("users").update({
+      isAdmin,
+      name,
+      email,
+      password: newPassword,
+      updated_at: knex.raw("strftime('%d/%m/%Y %H:%M:%S', 'now', 'localtime')")
+    }).where({id})
+
+    return response.json({
+      message: "Usuário atualizado com sucesso"
+    })
+
+
   }
 }
 
