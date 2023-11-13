@@ -77,6 +77,22 @@ class UserControllers {
 
 
   }
+
+  async delete(request, response){
+    const {id} = request.params
+
+    const user = await knex("users").where({id}).first()
+
+    if(!user){
+      throw new AppError("Usuário não encontrado")
+    }
+
+    await knex("users").where({ id }).delete()
+
+    return response.json({
+      message: "Usuário deletado com sucesso" 
+    })
+  }
 }
 
 module.exports = new UserControllers()

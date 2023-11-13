@@ -9,5 +9,6 @@ const userControllers = require("../controllers/usersControllers")
 usersRoutes.get("/:id", userControllers.show)
 usersRoutes.post("/", verifyFieldsIfEmpty, confirmPassword, userControllers.create)
 usersRoutes.put("/:id", verifyFieldsIfEmpty, confirmPassword, userControllers.update)
+usersRoutes.delete("/:id", userControllers.delete)
 
 module.exports = usersRoutes
