@@ -3,12 +3,13 @@ const usersRoutes = Router()
 
 const confirmPassword = require("../middlewares/confirmPassword")
 const verifyFieldsIfEmpty = require("../middlewares/verifyFieldsIfEmpty")
+const ensureAuthenticated = require("../middlewares/ensureAuthenticated")
 
 const userControllers = require("../controllers/usersControllers")
 
-usersRoutes.get("/:id", userControllers.show)
 usersRoutes.post("/", verifyFieldsIfEmpty, confirmPassword, userControllers.create)
-usersRoutes.put("/:id", verifyFieldsIfEmpty, confirmPassword, userControllers.update)
-usersRoutes.delete("/:id", userControllers.delete)
+usersRoutes.get("/", ensureAuthenticated, userControllers.show)
+usersRoutes.put("/", verifyFieldsIfEmpty, confirmPassword, ensureAuthenticated, userControllers.update)
+usersRoutes.delete("/", ensureAuthenticated, userControllers.delete)
 
 module.exports = usersRoutes
