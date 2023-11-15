@@ -4,7 +4,6 @@ const { hash, compare } = require("bcryptjs")
 
 class UserControllers {
   async show(request, response) {
-    
     const user_id = request.user.id
     const user = await knex("users").where({ id: user_id }).first()
 
