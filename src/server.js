@@ -4,6 +4,9 @@ const AppError = require("./utils/appError")
 const express = require("express")
 const app = express()
 
+const cors = require("cors")
+app.use(cors())
+
 const sqliteConnection = require("./dataBase/sqlite")
 sqliteConnection()
 
