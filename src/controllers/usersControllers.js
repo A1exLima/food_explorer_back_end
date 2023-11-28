@@ -16,7 +16,7 @@ class UserControllers {
 
   async create(request, response) {
     const { isAdmin, name, email, password } = request.body
-
+  
     const checkEmailExists = await knex("users").where({ email }).first()
 
     if (checkEmailExists) {
