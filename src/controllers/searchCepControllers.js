@@ -12,7 +12,7 @@ class SearchCepControllers {
       .then((data) => {
         
         if (data.erro) {
-          throw new AppError("Cep não encontrado")
+          throw new AppError("Cep não localizado", 404)
         }
         const address = data
 

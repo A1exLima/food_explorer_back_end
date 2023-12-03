@@ -10,4 +10,7 @@ routes.use("/sessions", sessionsRoutes)
 const searchCepRoutes = require("./searchCep.routes")
 routes.use("/search_cep", searchCepRoutes)
 
+const addressRoutes = require("./address.routes")
+routes.use("/address", addressRoutes)
+
 module.exports = routes

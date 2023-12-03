@@ -15,8 +15,8 @@ class UserControllers {
   }
 
   async create(request, response) {
-    const { isAdmin, name, email, password } = request.body
-  
+    const { isAdmin = false, name, email, password } = request.body
+
     const checkEmailExists = await knex("users").where({ email }).first()
 
     if (checkEmailExists) {
@@ -25,8 +25,10 @@ class UserControllers {
 
     const hashPassword = await hash(password, 8)
 
+    const isAdminString = String(isAdmin)
+
     await knex("users").insert({
-      isAdmin,
+      isAdmin: isAdminString,
       name,
       email,
       password: hashPassword,
@@ -39,7 +41,7 @@ class UserControllers {
 
   async update(request, response) {
     const user_id = request.user.id
-    const { isAdmin, name, email, oldPassword, password } = request.body
+    const { isAdmin, name, email, oldPassword, newPassword } = request.body
 
     const user = await knex("users").where({ id: user_id }).first()
 
@@ -50,32 +52,52 @@ class UserControllers {
     const emailIsInUse = await knex("users").where({ email }).first()
 
     if (emailIsInUse && emailIsInUse.id !== user.id) {
-      throw new AppError("E-mail encontra-se em uso")
+      throw new AppError("Email encontra-se em uso")
     }
 
-    const checkOldPassword = await compare(oldPassword, user.password)
+    if (oldPassword && newPassword === user.password) {
+      user.isAdmin = isAdmin
+      user.name = name
+      user.email = email
 
-    if (!checkOldPassword) {
-      throw new AppError("Senha antiga não confere")
+      await knex("users")
+        .update({
+          isAdmin,
+          name,
+          email,
+          updated_at: knex.raw(
+            "strftime('%d/%m/%Y %H:%M:%S', 'now', 'localtime')"
+          ),
+        })
+        .where({ id: user_id })
+    } else {
+      const checkOldPassword = await compare(oldPassword, user.password)
+
+      if (!checkOldPassword) {
+        throw new AppError("Senha antiga não confere")
+      }
+
+      const password = await hash(newPassword, 8)
+
+      user.isAdmin = isAdmin
+      user.name = name
+      user.email = email
+      user.password = password
+
+      await knex("users")
+        .update({
+          isAdmin,
+          name,
+          email,
+          password,
+          updated_at: knex.raw(
+            "strftime('%d/%m/%Y %H:%M:%S', 'now', 'localtime')"
+          ),
+        })
+        .where({ id: user_id })
     }
 
-    const newPassword = await hash(password, 8)
-
-    await knex("users")
-      .update({
-        isAdmin,
-        name,
-        email,
-        password: newPassword,
-        updated_at: knex.raw(
-          "strftime('%d/%m/%Y %H:%M:%S', 'now', 'localtime')"
-        ),
-      })
-      .where({ id: user_id })
-
-    return response.json({
-      message: "Usuário atualizado com sucesso",
-    })
+    return response.json(user)
   }
 
   async delete(request, response) {

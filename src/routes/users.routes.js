@@ -14,7 +14,7 @@ const avatarControllers = require("../controllers/avatarControllers")
 
 usersRoutes.post("/", verifyFieldsIfEmpty, confirmPassword, userControllers.create)
 usersRoutes.get("/", ensureAuthenticated, userControllers.show)
-usersRoutes.put("/", verifyFieldsIfEmpty, confirmPassword, ensureAuthenticated, userControllers.update)
+usersRoutes.put("/", ensureAuthenticated, userControllers.update)
 usersRoutes.delete("/", ensureAuthenticated, userControllers.delete)
 usersRoutes.patch("/avatar", ensureAuthenticated, upload.single("avatar"), avatarControllers.update)
 
