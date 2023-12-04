@@ -1,7 +1,6 @@
 const { Router } = require("express")
 const addressRoutes = Router()
 
-const verifyFieldsIfEmpty = require("../middlewares/verifyFieldsIfEmpty")
 const ensureAuthenticated = require("../middlewares/ensureAuthenticated")
 
 const addressControllers = require("../controllers/addressControllers")

@@ -23,14 +23,15 @@ class AvatarControllers {
     await knex("users")
       .update({
         avatar: fileName,
-        updated_at: knex.raw("strftime('%d/%m/%Y %H:%M:%S', 'now', 'localtime')")
+        updated_at: knex.raw(
+          "strftime('%d/%m/%Y %H:%M:%S', 'now', 'localtime')"
+        ),
       })
       .where({ id: user_id })
 
-      const userUpdate = await knex("users").where({ id: user_id }).first()
+    const userUpdate = await knex("users").where({ id: user_id }).first()
 
     response.json(userUpdate)
-    
   }
 }
 

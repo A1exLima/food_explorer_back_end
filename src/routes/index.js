@@ -13,4 +13,7 @@ routes.use("/search_cep", searchCepRoutes)
 const addressRoutes = require("./address.routes")
 routes.use("/address", addressRoutes)
 
+const dishRoutes = require("./dish.Routes")
+routes.use("/dish", dishRoutes)
+
 module.exports = routes
