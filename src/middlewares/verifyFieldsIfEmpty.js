@@ -9,7 +9,7 @@ function verifyFieldsIfEmpty(request, response, next) {
     if (object.hasOwnProperty(key)) {
 
       if (!object[key]) {
-        throw new AppError("Preencha todos os campos")
+        throw new AppError("Preencha todos os campos", 401)
       }
     }
   }
