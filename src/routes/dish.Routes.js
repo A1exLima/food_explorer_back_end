@@ -11,6 +11,8 @@ const verifyFieldsIfEmpty = require("../middlewares/verifyFieldsIfEmpty")
 const dishControllers = require("../controllers/dishControllers")
 const imageDishControllers = require("../controllers/imageDishControllers")
 
+dishRoutes.get("/", ensureAuthenticated, dishControllers.index)
+
 dishRoutes.post("/", verifyFieldsIfEmpty, ensureAuthenticated, dishControllers.create)
 dishRoutes.patch("/image_dish/:dish_id", ensureAuthenticated, upload.single("image"), imageDishControllers.update)
 
