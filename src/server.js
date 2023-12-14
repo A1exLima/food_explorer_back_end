@@ -14,6 +14,7 @@ app.use(express.json())
 
 const uploadConfigs = require("./configs/uploads")
 app.use("/files", express.static(uploadConfigs.UPLOADS_FOLDER))
+app.use("/files_image", express.static(uploadConfigs.UPLOADS_FOLDER_DISH))
 
 const routes = require("./routes")
 app.use(routes)
