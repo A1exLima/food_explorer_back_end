@@ -56,15 +56,15 @@ class UserControllers {
     }
 
     if (oldPassword && newPassword === user.password) {
-      user.isAdmin = isAdmin
-      user.name = name
-      user.email = email
+      user.isAdmin = isAdmin ?? user.isAdmin
+      user.name = name ?? user.name
+      user.email = email ?? user.email
 
       await knex("users")
         .update({
-          isAdmin,
-          name,
-          email,
+          isAdmin: user.isAdmin,
+          name: user.name,
+          email: user.email,
           updated_at: knex.raw(
             "strftime('%d/%m/%Y %H:%M:%S', 'now', 'localtime')"
           ),
@@ -79,17 +79,17 @@ class UserControllers {
 
       const password = await hash(newPassword, 8)
 
-      user.isAdmin = isAdmin
-      user.name = name
-      user.email = email
-      user.password = password
+      user.isAdmin = isAdmin ?? user.isAdmin
+      user.name = name ?? user.name
+      user.email = email ?? user.email
+      user.password = password ?? user.password
 
       await knex("users")
         .update({
-          isAdmin,
-          name,
-          email,
-          password,
+          isAdmin: user.isAdmin,
+          name: user.name,
+          email: user.email,
+          password: user.password,
           updated_at: knex.raw(
             "strftime('%d/%m/%Y %H:%M:%S', 'now', 'localtime')"
           ),

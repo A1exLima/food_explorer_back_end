@@ -14,6 +14,7 @@ const imageDishControllers = require("../controllers/imageDishControllers")
 dishRoutes.get("/:id", ensureAuthenticated, dishControllers.show)
 dishRoutes.get("/", ensureAuthenticated, dishControllers.index)
 dishRoutes.post("/", verifyFieldsIfEmpty, ensureAuthenticated, dishControllers.create)
+dishRoutes.put("/:id", ensureAuthenticated, dishControllers.update)
 dishRoutes.patch("/image_dish/:dish_id", ensureAuthenticated, upload.single("image"), imageDishControllers.update)
 
 module.exports = dishRoutes
