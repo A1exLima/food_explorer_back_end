@@ -1,6 +1,8 @@
 const knex = require("../dataBase/knex")
 const AppError = require("../utils/appError")
 
+const DiskStorageDish = require("../providers/diskStorageDish")
+
 class DishControllers {
   async create(request, response) {
     const user_id = request.user.id
@@ -139,6 +141,7 @@ class DishControllers {
   }
 
   async delete(request, response) {
+    const diskStorageDish = new DiskStorageDish()
     const { id } = request.params
 
     const dish = await knex("dish").where({ id }).first()
@@ -147,11 +150,13 @@ class DishControllers {
       throw new AppError("Prato não localizado", 401)
     }
 
+    diskStorageDish.deleteFile(dish.image)
+
     const confirmDelete = await knex("dish").where({ id }).delete()
-    
+
     if (confirmDelete) {
       response.json({
-        message: "Prato excluído com sucesso.",
+        message: "Prato excluído com sucesso",
       })
     }
   }
