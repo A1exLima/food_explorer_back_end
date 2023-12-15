@@ -85,7 +85,8 @@ class DishControllers {
   async update(request, response) {
     const user_id = request.user.id
     const { id } = request.params
-    const { name, category, ingredients, price, description, image } = request.body
+    const { name, category, ingredients, price, description, image } =
+      request.body
 
     const dish = await knex("dish").where({ id }).first()
 
@@ -107,17 +108,20 @@ class DishControllers {
     dish.description = description ?? dish.description
     dish.image = image ?? dish.image
 
-    await knex("dish").update({
-      name: dish.name,
-      category: dish.category,
-      price: dish.price,
-      description: dish.description,
-      image: dish.image,
-      updated_at: knex.raw("strftime('%d/%m/%Y %H:%M:%S', 'now', 'localtime')"),
-    })
-    .where({id})
+    await knex("dish")
+      .update({
+        name: dish.name,
+        category: dish.category,
+        price: dish.price,
+        description: dish.description,
+        image: dish.image,
+        updated_at: knex.raw(
+          "strftime('%d/%m/%Y %H:%M:%S', 'now', 'localtime')"
+        ),
+      })
+      .where({ id })
 
-    await knex("ingredients").where({dish_id: id}).delete()
+    await knex("ingredients").where({ dish_id: id }).delete()
 
     const ingredientsInsert = ingredients.map((ingredient) => {
       return {
@@ -130,8 +134,26 @@ class DishControllers {
     await knex("ingredients").insert(ingredientsInsert)
 
     response.json({
-      message: "Prato atualizado com sucesso"
+      message: "Prato atualizado com sucesso",
     })
+  }
+
+  async delete(request, response) {
+    const { id } = request.params
+
+    const dish = await knex("dish").where({ id }).first()
+
+    if (!dish) {
+      throw new AppError("Prato não localizado", 401)
+    }
+
+    const confirmDelete = await knex("dish").where({ id }).delete()
+    
+    if (confirmDelete) {
+      response.json({
+        message: "Prato excluído com sucesso.",
+      })
+    }
   }
 }
 
