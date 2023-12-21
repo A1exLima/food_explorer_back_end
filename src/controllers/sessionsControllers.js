@@ -19,9 +19,9 @@ class SessionsControllers {
     if (!checkPassword) {
       throw new AppError("E-mail e/ou senha incorreta")
     }
-
+    
     const { secret, expiresIn } = authConfig.jwt
-    const token = sign({}, secret, {
+    const token = sign({role: user.role}, secret, {
       subject: String(user.id),
       expiresIn
     })

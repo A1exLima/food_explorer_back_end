@@ -8,6 +8,7 @@ const upload = multer(uploadConfig.MULTER)
 const confirmPassword = require("../middlewares/confirmPassword")
 const verifyFieldsIfEmpty = require("../middlewares/verifyFieldsIfEmpty")
 const ensureAuthenticated = require("../middlewares/ensureAuthenticated")
+const verifyUserAuthorization = require("../middlewares/verifyUserAuthorization")
 
 const userControllers = require("../controllers/usersControllers")
 const avatarControllers = require("../controllers/avatarControllers")
@@ -15,7 +16,7 @@ const avatarControllers = require("../controllers/avatarControllers")
 usersRoutes.post("/", verifyFieldsIfEmpty, confirmPassword, userControllers.create)
 usersRoutes.get("/", ensureAuthenticated, userControllers.show)
 usersRoutes.put("/", ensureAuthenticated, userControllers.update)
-usersRoutes.delete("/", ensureAuthenticated, userControllers.delete)
+usersRoutes.delete("/", ensureAuthenticated, verifyUserAuthorization(["admin"]), userControllers.delete)
 usersRoutes.patch("/avatar", ensureAuthenticated, upload.single("avatar"), avatarControllers.update)
 
 

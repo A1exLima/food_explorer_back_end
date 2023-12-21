@@ -15,7 +15,7 @@ class UserControllers {
   }
 
   async create(request, response) {
-    const { isAdmin = false, name, email, password } = request.body
+    const {name, email, password } = request.body
 
     const checkEmailExists = await knex("users").where({ email }).first()
 
@@ -25,10 +25,7 @@ class UserControllers {
 
     const hashPassword = await hash(password, 8)
 
-    const isAdminString = String(isAdmin)
-
     await knex("users").insert({
-      isAdmin: isAdminString,
       name,
       email,
       password: hashPassword,
@@ -41,7 +38,7 @@ class UserControllers {
 
   async update(request, response) {
     const user_id = request.user.id
-    const { isAdmin, name, email, oldPassword, newPassword } = request.body
+    const {name, email, oldPassword, newPassword } = request.body
     
     const user = await knex("users").where({ id: user_id }).first()
 
@@ -56,13 +53,12 @@ class UserControllers {
     }
 
     if (oldPassword && newPassword === user.password) {
-      user.isAdmin = isAdmin ?? user.isAdmin
+
       user.name = name ?? user.name
       user.email = email ?? user.email
 
       await knex("users")
         .update({
-          isAdmin: user.isAdmin,
           name: user.name,
           email: user.email,
           updated_at: knex.raw(
@@ -79,14 +75,12 @@ class UserControllers {
 
       const password = await hash(newPassword, 8)
 
-      user.isAdmin = isAdmin ?? user.isAdmin
       user.name = name ?? user.name
       user.email = email ?? user.email
       user.password = password ?? user.password
 
       await knex("users")
         .update({
-          isAdmin: user.isAdmin,
           name: user.name,
           email: user.email,
           password: user.password,

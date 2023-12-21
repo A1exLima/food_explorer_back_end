@@ -1,6 +1,5 @@
 exports.up = knex => knex.schema.createTable("users", table =>{
-  
-  table.boolean("isAdmin").defaultTo(false)
+  table.enum("role", ["admin","customer"], {useNative: true, enumName: "roles"}).notNullable().default("customer")
   table.increments("id");
   table.text("name");
   table.text("email");
