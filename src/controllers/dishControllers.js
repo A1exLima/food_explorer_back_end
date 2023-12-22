@@ -39,7 +39,6 @@ class DishControllers {
   }
 
   async index(request, response) {
-    const user_id = request.user.id
     const { name, category } = request.query
 
     const filterCategory = category
@@ -50,13 +49,11 @@ class DishControllers {
 
     if (category) {
       dishes = await knex("dish")
-        .where({ user_id })
         .whereLike("name", `%${name}%`)
         .whereIn("category", filterCategory)
         .orderBy("name")
     } else {
       dishes = await knex("dish")
-        .where({ user_id })
         .whereLike("name", `%${name}%`)
         .orderBy("name")
     }

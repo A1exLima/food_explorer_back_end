@@ -12,9 +12,9 @@ const verifyUserAuthorization = require("../middlewares/verifyUserAuthorization"
 const dishControllers = require("../controllers/dishControllers")
 const imageDishControllers = require("../controllers/imageDishControllers")
 
-dishRoutes.get("/", ensureAuthenticated, dishControllers.index)
+dishRoutes.get("/", dishControllers.index)
 
-dishRoutes.get("/:id", ensureAuthenticated, dishControllers.show)
+dishRoutes.get("/:id", dishControllers.show)
 
 dishRoutes.post(
   "/",

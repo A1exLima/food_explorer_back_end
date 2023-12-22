@@ -15,7 +15,7 @@ class UserControllers {
   }
 
   async create(request, response) {
-    const {name, email, password } = request.body
+    const { name, email, password } = request.body
 
     const checkEmailExists = await knex("users").where({ email }).first()
 
@@ -38,8 +38,8 @@ class UserControllers {
 
   async update(request, response) {
     const user_id = request.user.id
-    const {name, email, oldPassword, newPassword } = request.body
-    
+    const { name, email, oldPassword, newPassword } = request.body
+
     const user = await knex("users").where({ id: user_id }).first()
 
     if (!user) {
@@ -53,7 +53,6 @@ class UserControllers {
     }
 
     if (oldPassword && newPassword === user.password) {
-
       user.name = name ?? user.name
       user.email = email ?? user.email
 
