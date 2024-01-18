@@ -16,4 +16,7 @@ routes.use("/address", addressRoutes)
 const dishRoutes = require("./dish.Routes")
 routes.use("/dish", dishRoutes)
 
+const checkoutRoutes = require("./checkout.routes")
+routes.use("/checkout", checkoutRoutes)
+
 module.exports = routes
