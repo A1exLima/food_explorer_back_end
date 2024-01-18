@@ -32,21 +32,6 @@ class CheckoutControllers {
 
   }
 
-  async show(request, response) {
-    const { id } = request.params
-
-    const dish = await knex("dish").where({ id }).first()
-    const ingredients = await knex("ingredients")
-      .where({ dish_id: id })
-      .orderBy("name")
-
-    const dishAndIngredients = {
-      ...dish,
-      ingredients,
-    }
-
-    response.json(dishAndIngredients)
-  }
 }
 
 module.exports = new CheckoutControllers()
