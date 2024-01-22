@@ -19,4 +19,7 @@ routes.use("/dish", dishRoutes)
 const checkoutRoutes = require("./checkout.routes")
 routes.use("/checkout", checkoutRoutes)
 
+const favoriteRoutes = require("./favorite.routes")
+routes.use("/favorite", favoriteRoutes)
+
 module.exports = routes
