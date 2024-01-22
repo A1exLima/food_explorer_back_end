@@ -45,13 +45,41 @@ class FavoriteControllers {
 
   async index(request, response) {
     const user_id = request.user.id
+    const { role } = request.user
 
-    const usersFavoriteDishes = await knex("favoriteDishes").where({ user_id })
+    if (role === "customer") {
+      const usersFavoriteDishes = await knex("favoriteDishes").where({
+        user_id,
+      })
 
-    if (usersFavoriteDishes) {
-      return response.json(usersFavoriteDishes)
+      if (usersFavoriteDishes) {
+        return response.json(usersFavoriteDishes)
+      } else {
+        throw new AppError("Não foi possível localizar os pratos favoritos")
+      }
     } else {
-      throw new AppError("Não foi possível localizar os pratos favoritos")
+      const dishesFavorites = await knex("favoriteDishes").orderBy("dish_id")
+
+      const count = {}
+      dishesFavorites.forEach((object) => {
+        const dish_id = object.dish_id
+
+        if (count[dish_id]) {
+          count[dish_id].amount++
+        } else {
+          count[dish_id] = {
+            ...object,
+            amount: 1,
+          }
+        }
+      })
+
+      const newArray = Object.values(count).map((item) => item)
+
+      if (!newArray) {
+        throw new AppError("Não foi possível localizar os pratos favoritos")
+      }
+      return response.json(newArray)
     }
   }
 }
