@@ -3,6 +3,15 @@ const knex = require("../dataBase/knex")
 const { hash, compare } = require("bcryptjs")
 
 class UserControllers {
+  async index(request, response) {
+    const {user_id} = request.params
+
+    const userData = await knex("users").where({id: user_id}).first()
+
+    response.json(userData)
+
+  }
+
   async show(request, response) {
     const user_id = request.user.id
     const user = await knex("users").where({ id: user_id }).first()

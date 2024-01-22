@@ -99,6 +99,18 @@ class CheckoutControllers {
 
     return response.json(orderAndItemsOrder)
   }
+
+  async update(request, response) {
+    const {id} = request.params
+
+    await knex("orders").update({
+      orderCompleted: 1
+    }).where({id})
+
+    const confirmUpdate = await knex("orders").where({id}).first()
+
+    response.json(confirmUpdate)
+  }
 }
 
 module.exports = new CheckoutControllers()
