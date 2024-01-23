@@ -53,9 +53,28 @@ class DishControllers {
         .whereIn("category", filterCategory)
         .orderBy("name")
     } else {
-      dishes = await knex("dish")
-        .whereLike("name", `%${name}%`)
-        .orderBy("name")
+      dishes = await knex("ingredients")
+        .select([
+          "dish.id",
+          "dish.user_id",
+          "dish.name",
+          "dish.category",
+          "dish.price",
+          "dish.description",
+          "dish.image",
+          "dish.created_at",
+          "dish.updated_at",
+        ])
+        .innerJoin("dish", "dish.id", "ingredients.dish_id")
+        .where(function () {
+          this.whereRaw("LOWER(`dish`.`name`) LIKE ?", [
+            `%${name.toLowerCase()}%`,
+          ]).orWhereRaw("LOWER(`ingredients`.`name`) LIKE ?", [
+            `%${name.toLowerCase()}%`,
+          ])
+        })
+        .groupBy("dish.id")
+        .orderBy("dish.name")
     }
 
     if (!dishes) {
