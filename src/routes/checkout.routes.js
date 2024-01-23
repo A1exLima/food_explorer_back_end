@@ -9,7 +9,7 @@ const checkoutControllers = require("../controllers/checkoutControllers")
 checkoutRoutes.post("/", ensureAuthenticated, verifyUserAuthorization(["customer"]), checkoutControllers.create)
 checkoutRoutes.get("/", ensureAuthenticated, verifyUserAuthorization(["customer", "admin"]), checkoutControllers.index)
 checkoutRoutes.get("/:id", ensureAuthenticated, verifyUserAuthorization(["customer", "admin"]), checkoutControllers.show)
-checkoutRoutes.patch("/:id", ensureAuthenticated, verifyUserAuthorization(["admin"]), checkoutControllers.update)
+checkoutRoutes.patch("/", ensureAuthenticated, verifyUserAuthorization(["admin"]), checkoutControllers.update)
 
 
 module.exports = checkoutRoutes

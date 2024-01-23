@@ -101,10 +101,10 @@ class CheckoutControllers {
   }
 
   async update(request, response) {
-    const {id} = request.params
+    const {id, status} = request.query
 
     await knex("orders").update({
-      orderCompleted: 1
+      orderCompleted: status
     }).where({id})
 
     const confirmUpdate = await knex("orders").where({id}).first()
