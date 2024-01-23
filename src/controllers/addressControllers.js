@@ -26,28 +26,31 @@ class AddressController {
     const user_id = request.user.id
     const address = request.body
 
-    const oldAddress = await knex("address").where({user_id}).first()
+    const oldAddress = await knex("address").where({ user_id }).first()
 
-    if(!oldAddress){
+    if (!oldAddress) {
       throw new AppError("Endereço não encontrado", 404)
     }
 
-    await knex("address").update({
-      updated_at: knex.raw("strftime('%d/%m/%Y %H:%M:%S', 'now', 'localtime')"),
-      ...address
-    })
-    .where({user_id})
+    await knex("address")
+      .update({
+        updated_at: knex.raw(
+          "strftime('%d/%m/%Y %H:%M:%S', 'now', 'localtime')"
+        ),
+        ...address,
+      })
+      .where({ user_id })
 
-     return response.json({
-       message: "Endereço atualizado com sucesso"
-     })
+    return response.json({
+      message: "Endereço atualizado com sucesso",
+    })
   }
 
   async show(request, response) {
     const user_id = request.user.id
-    const address = await knex("address").where({user_id}).first()
+    const address = await knex("address").where({ user_id }).first()
 
-    if(!address){
+    if (!address) {
       throw new AppError("Endereço não encontrado", 404)
     }
     response.json({
@@ -57,7 +60,27 @@ class AddressController {
       complement: address.complement,
       district: address.district,
       city: address.city,
-      country: address.country
+      country: address.country,
+    })
+  }
+
+  async index(request, response) {
+    const {user_id} = request.params
+
+    const address = await knex("address").where({ user_id }).first()
+
+    if (!address) {
+      throw new AppError("Endereço não encontrado", 404)
+    }
+    
+    response.json({
+      street: address.street,
+      number: address.number,
+      cep: address.cep,
+      complement: address.complement,
+      district: address.district,
+      city: address.city,
+      country: address.country,
     })
   }
 }
