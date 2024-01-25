@@ -1,19 +1,18 @@
+___
 <p align="center">
-  <h1 align="center"><a href="https://fedelivery.netlify.app/">Food Explorer - Back-end :rocket: </a></h1>
+  <a href="https://fedelivery.netlify.app/"> <img width="500" height="85" src="https://raw.githubusercontent.com/GomidesTs/food-explorer-back-end/17c651de31265dcc961c11b01d309fbd9bfa14b8/.github/logo.svg"> <a/>
 </p>
+  
+___
 
-<p align="center">
-  <img width="550" height="99" src="https://uploaddeimagens.com.br/images/004/721/461/original/brandFoodExplorer.png">
-</p>
+    
+## 👨‍💻 Sobre
+
+Este repositório contém o código-fonte da API back-end desenvolvida como desafio final para o curso da Rocketseat. A API é parte integrante do ecossistema do FoodExplorer, um restaurante inovador que busca proporcionar uma experiência gastronômica única.
 
 ___
 
-## 💻 Sobre
-Este repositório contém o código-fonte da API back-end desenvolvida como desafio final par ao curso da Rocketseat. A API é parte integrante do ecossistema do FoodExplorer, um restaurante inovador que busca proporcionar uma experiência gastronômica única.
-
-___
-
-## 🛠 Tecnologias
+## 📄 Tecnologias
 
 As seguintes tecnologias foram empregadas na criação deste projeto:
 
@@ -47,7 +46,7 @@ $ git clone git@github.com:A1exLima/rocketseat-stage8-backend-desafio.git
 ```
 ___
 
-#### 🚧 Executando o BackEnd
+#### 🚧 Executando o Back-end
 ```bash
 # No BackEnd altere o nome do arquivo .env.example para .env e insira uma porta e um secret no arquivo vazio, como no exemplo abaixo
   AUTH_SECRET="default"
@@ -64,4 +63,22 @@ $ npm run dev
 ```
 ___
 
-[O resultado FINAL pode ser visto aqui](https://fedelivery.netlify.app/)
+## 🛠️ Código front-end
+
+<p>Você pode acessar o código front-end desse projeto através do link: 
+<a href= "https://github.com/A1exLima/food_explorer_front_end" target="_blank"> Clique aqui ⏯ </a>
+</p>
+
+___
+
+## 🪪 Licença
+
+Esse projeto está sob a licença MIT.
+
+---
+
+<p align="center"> created by Alex Lima  - © 2024 - Todos os direitos reservados.<p align="center">
+ <a href="https://www.linkedin.com/in/a1exlima/" target="_blank"><img src="https://static.licdn.com/sc/h/5bukxbhy9xsil5mb7c2wulfbx" height="25" width="25" alt="Linked" />
+</p></p>
+
+___
