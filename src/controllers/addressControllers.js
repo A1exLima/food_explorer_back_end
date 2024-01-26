@@ -25,7 +25,6 @@ class AddressController {
   async update(request, response) {
     const user_id = request.user.id
     const address = request.body
-
     const oldAddress = await knex("address").where({ user_id }).first()
 
     if (!oldAddress) {
