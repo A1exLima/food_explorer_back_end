@@ -4,12 +4,13 @@ const { hash, compare } = require("bcryptjs")
 
 class UserControllers {
   async index(request, response) {
-    const {user_id} = request.params
+    const { user_id } = request.params
 
-    const userData = await knex("users").where({id: user_id}).first()
+    const user = await knex("users").where({ id: user_id }).first()
 
-    response.json(userData)
+    delete user.password
 
+    response.json(user)
   }
 
   async show(request, response) {
@@ -20,6 +21,8 @@ class UserControllers {
       throw new AppError("Usuário não encontrado")
     }
 
+    delete user.password
+    
     response.json(user)
   }
 
@@ -61,7 +64,7 @@ class UserControllers {
       throw new AppError("Email encontra-se em uso")
     }
 
-    if (oldPassword && newPassword === user.password) {
+    if (oldPassword === false && newPassword === false) {
       user.name = name ?? user.name
       user.email = email ?? user.email
 
@@ -98,6 +101,8 @@ class UserControllers {
         })
         .where({ id: user_id })
     }
+
+    delete user.password
 
     return response.json(user)
   }

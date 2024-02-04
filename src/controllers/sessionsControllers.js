@@ -26,6 +26,8 @@ class SessionsControllers {
       expiresIn
     })
 
+    delete user.password
+
     response.json({user, token})
   }
 }
