@@ -25,6 +25,7 @@ As seguintes tecnologias foram empregadas na criação deste projeto:
 - [knex (v3.0.1)](https://knexjs.org/): Construtor de consultas SQL para Node.js, facilitando a interação com bancos de dados.
 - [bcryptjs (v2.4.3)](https://www.npmjs.com/package/bcryptjs): Para segurança e criptografia de senhas.
 - [jsonwebtoken (v9.0.2)](https://www.npmjs.com/package/jsonwebtoken): Implementação de tokens JWT para autenticação segura.
+- - [cookie-parser (v1.4.6)](https://expressjs.com/en/resources/middleware/cookie-parser.html): Biblioteca para Node.js que facilita o gerenciamento de cookies em aplicativos da web..
 - [multer (v1.4.5-lts.1)](https://www.npmjs.com/package/multer): Middleware para manipulação de dados de formulário, permitindo o envio de arquivos.
 - [cors (v2.8.5)](https://www.npmjs.com/package/cors): Facilitando a integração entre back-end e front-end.
 - [dotenv (v16.3.2)](https://www.npmjs.com/package/dotenv): Gerenciamento de variáveis de ambiente para configuração flexível 
