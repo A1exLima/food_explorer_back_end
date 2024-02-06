@@ -1,6 +1,9 @@
 const {Router} = require("express")
 const routes = Router()
 
+const usersValidatedRoutes = require("./usersValidated.routes")
+routes.use("/validated", usersValidatedRoutes)
+
 const usersRoutes = require("./users.routes")
 routes.use("/users", usersRoutes)
 
